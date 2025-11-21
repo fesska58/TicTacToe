@@ -3,26 +3,157 @@
 }
 
 body {
-  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background: #0f1115;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #e5e7eb;
 }
 
+/* Контейнер игры */
+.game-container {
+  background: #1a1c22;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  text-align: center;
+  border: 1px solid #2a2d34;
+}
+
+/* Статус */
+.status {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #e5e7eb;
+  transition: all 0.3s ease;
+  text-shadow: none;
+}
+
+/* НЕОН CYAN — ход X */
+.status.x-turn {
+  color: #00eaff;
+  text-shadow:
+    0 0 6px #00eaff,
+    0 0 12px #00eaff,
+    0 0 22px #00eaff;
+}
+
+/* НЕОН MAGENTA — ход O */
+.status.o-turn {
+  color: #ff4cf8;
+  text-shadow:
+    0 0 6px #ff4cf8,
+    0 0 12px #ff4cf8,
+    0 0 22px #ff4cf8;
+}
+
+/* НЕОН ПОБЕДИТЕЛЯ */
+.status.winner-x {
+  color: #00eaff;
+  text-shadow:
+    0 0 8px #00eaff,
+    0 0 16px #00eaff,
+    0 0 28px #00eaff;
+}
+
+.status.winner-o {
+  color: #ff4cf8;
+  text-shadow:
+    0 0 8px #ff4cf8,
+    0 0 16px #ff4cf8,
+    0 0 28px #ff4cf8;
+}
+
+/* Пульсация при победе */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+.status.winner-x,
+.status.winner-o {
+  animation: pulse 1.8s infinite ease-in-out;
+}
+
+/* Кнопки-клетки */
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  background: #1f2329;
+  border: 2px solid #2c3038;
   float: left;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
+  line-height: 70px;
+  height: 70px;
+  width: 70px;
+  margin: 0;
   padding: 0;
   text-align: center;
-  width: 34px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  color: #e5e7eb;
 }
 
-.board-row:after {
-  clear: both;
-  content: '';
-  display: table;
+/* Hover эффект */
+.square:hover {
+  background: #262b33;
+  border-color: #4c82ff;
+  box-shadow: 0 0 12px rgba(76, 130, 255, 0.45);
+}
+
+/* НЕОН ДЛЯ X */
+.square:has(span.x) {
+  color: #00eaff; /* cyan */
+  text-shadow: 
+    0 0 6px #00eaff,
+    0 0 12px #00eaff,
+    0 0 20px #00eaff;
+}
+
+/* НЕОН ДЛЯ O */
+.square:has(span.o) {
+  color: #ff4cf8; /* magenta */
+  text-shadow:
+    0 0 6px #ff4cf8,
+    0 0 12px #ff4cf8,
+    0 0 20px #ff4cf8;
+}
+
+/* Плавное появление после клика */
+.square span {
+  display: inline-block;
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Строки игрового поля */
+.board-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.board-row:last-child {
+  margin-bottom: 0;
 }

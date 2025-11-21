@@ -4,7 +4,9 @@ import './style.css';
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
-      {value}
+      {value && (
+        <span className={value === 'X'? 'x': 'o'}>{value}</span>  
+      )}
     </button>
   );
 }
@@ -36,10 +38,16 @@ export default function Board() {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
+  let statusClass = "";
+
+  if (winner === "X") statusClass = "winner-x";
+  else if (winner === "O") statusClass = "winner-o";
+  else statusClass = xIsNext ? "x-turn" : "o-turn";
 
   return (
     <>
-      <div className='status'>{status}</div>
+    <div className="game-container">
+      <div className={`status ${statusClass}`}>{status}</div>
       <div className="board-row">
         <Square value = {squares[0]} onSquareClick={() => handleClick(0)}/>
         <Square value = {squares[1]} onSquareClick={() => handleClick(1)}/>
@@ -55,6 +63,7 @@ export default function Board() {
         <Square value = {squares[7]} onSquareClick={() => handleClick(7)}/>
         <Square value = {squares[8]} onSquareClick={() => handleClick(8)}/>
       </div>
+    </div>
     </>
   );
 }
